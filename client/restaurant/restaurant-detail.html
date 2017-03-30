@@ -1,0 +1,195 @@
+
+	<ul>
+		<!-- li ng-repeat="restaurant in $ctrl.restaurants">
+            <h2><a href="#!/restaurant/{{restaurant._id}}">{{restaurant.name}}</a></h2>
+			
+        </li -->
+	</ul>
+
+<div class="card">
+			<div class="container-fliud">
+				<div class="wrapper row">
+					<div class="preview col-md-6">
+						
+						<div class="preview-pic tab-content">
+							
+							
+
+							<div class="tab-pane active" id="pic-1"><img src="http://placekitten.com/400/252"></div>
+
+							
+							
+						  <div class="tab-pane" id="pic-2"><img src="http://placekitten.com/400/252" /></div>
+						  <div class="tab-pane" id="pic-3"><img src="http://placekitten.com/400/252" /></div>
+						  <div class="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252" /></div>
+						  <div class="tab-pane" id="pic-5"><img src="http://placekitten.com/400/252" /></div>
+						</div>
+						<ul class="preview-thumbnail nav nav-tabs">
+						  <li class="active"><a data-target="#pic-1" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
+						  <li><a data-target="#pic-2" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
+						  <li><a data-target="#pic-3" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
+						  <li><a data-target="#pic-4" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
+						  <li><a data-target="#pic-5" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
+						</ul>
+						
+					</div>
+					<div class="details col-md-6">
+						<h3 class="product-title">{{$ctrl.restaurant.name}}</h3>
+						<div class="rating">
+							<div class="stars">
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star"></span>
+								<span class="fa fa-star"></span>
+							</div>
+							<span class="review-no">10 reviews</span>
+						</div>
+						
+						
+						<addr>
+							{{$ctrl.restaurant.address.streetAddress}}<br>
+							{{$ctrl.restaurant.address.city}}, {{$ctrl.restaurant.address.state}} {{$ctrl.restaurant.address.zipcode}}
+						</addr>
+						<p class="product-description">Suspendisse quos? Tempus cras iure temporibus? Eu laudantium cubilia sem sem! Repudiandae et! Massa senectus enim minim sociosqu delectus posuere.</p>
+						<h4 class="price">current price: <span>$180</span></h4>
+						
+						
+						
+						<h4>What people think</h4>
+						<h4>
+								<span class="label label-primary">
+                                    tag
+                                    <span class="badge"><span class="glyphicon glyphicon-ok"></span>5</span>
+								</span>
+							
+						</h4>
+						
+						
+						<!-- h5 class="sizes">sizes:
+							<span class="size" data-toggle="tooltip" title="small">s</span>
+							<span class="size" data-toggle="tooltip" title="medium">m</span>
+							<span class="size" data-toggle="tooltip" title="large">l</span>
+							<span class="size" data-toggle="tooltip" title="xtra large">xl</span>
+						</h5>
+						<h5 class="colors">colors:
+							<span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
+							<span class="color green"></span>
+							<span class="color blue"></span>
+						</h5 -->
+						<div class="action">
+							<a class="add-to-cart btn btn-default" href="tel:{{$ctrl.restaurant.phoneNumber}}"><span class="glyphicon glyphicon-earphone"></span> {{$ctrl.restaurant.phoneNumber}}</a>
+							<button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+<!-- 
+
+recent checkins
+
+http://bootsnipp.com/snippets/featured/testimonials-based-on-bootstrap039s-6-primary-colors
+
+-->
+
+
+
+		
+		
+	<h4>Reviews</h4>
+
+
+
+
+	<div>
+        
+        
+    <div class="row-fluid"> 
+      <div class="col-sm-6" ng-repeat="rating in $ctrl.restaurant.ratings">
+          <div class="panel panel-default">
+          <div class="panel-heading">
+            <span itemscope itemtype="http://schema.org/Review">
+                <h3 class="panel-title" itemprop="name">{{rating.title}}</h3></span>
+          </div><!--/panel-heading-->
+          <div class="panel-body" itemprop="reviewBody">
+            <p>{{rating.body}}</p>
+
+            <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+              <small>
+              <span itemprop="name">-- J. Reviewer</span>
+                </small>
+            </span><!--/author schema -->
+<small>
+              <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+
+    {{rating.date_added|date:'fullDate'}}</small>
+              
+              <span class="pull-right">
+                  
+              <span class="reviewRating" itemscope itemtype="http://schema.org/Rating">
+                  <small>
+                <meta itemprop="worstRating" content="1">
+                  <span itemprop="ratingValue">{{rating.rating}}</span> / 
+                <span itemprop="bestRating"> stars </span>
+                  </small>
+              </span><!--/reviewRating-->
+                  <small>
+              
+              <span class="glyphicon glyphicon-star {{rating.rating > 0 ? '' : 'text-muted'}}" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-star {{rating.rating > 1 ? '' : 'text-muted'}}" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-star {{rating.rating > 2 ? '' : 'text-muted'}}" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-star {{rating.rating > 3 ? '' : 'text-muted'}}" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-star {{rating.rating < 5 ? '' : 'text-muted'}}" aria-hidden="true"></span>
+            </small>
+              </span>
+          </div><!--/panel-body-->
+        </div><!--/panel-->
+      </div><!--/col-sm-6-->
+          </div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+		
+	<restaurant-rating-form></restaurant-rating-form>
+		
+		
+		<form method="post" action="">
+			<div class="row">
+				<div class="col-md-6">
+						<div class="form-group">
+						<label for="username">Username</label>
+							<input id="username" maxlength="254" name="username" type="text" required class="form-control" placeholder="Enter username"/>
+						<!-- input type="text" class="form-control" id="InputUsername" aria-describedby="emailHelp" placeholder="Enter email" -->
+						</div>
+						<div class="form-group">
+						<label for="password">Password</label>
+						<input type="password" class="form-control" id="password" name="password" placeholder="Password">
+						</div>
+				</div>
+				<div class="col-md-6">
+					  <button type="submit" class="btn btn-primary">Log in</button> or   <a href="" class="btn btn-info">Register</a> to post a review
+					
+					<p>Forgot your password? <a href="">Recover your account</a></p>
+
+
+						
+				</div>
+
+			</div>
+		<input type="hidden" name="next" value="">	
+		</form>
+	</div>

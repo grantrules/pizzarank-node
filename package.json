@@ -1,0 +1,22 @@
+{
+  "name": "pizzarank-node",
+  "main": "server.js",
+  "description": "Pizza slice reviewing site",
+  "license": "MIT",
+  "dependencies": {
+    "@google/maps": "^0.3.1",
+    "angular": "^1.6.2",
+    "angular-animate": "^1.6.3",
+    "angular-mocks": "^1.6.3",
+    "angular-resource": "^1.6.3",
+    "angular-route": "^1.6.3",
+    "aws-sdk": "^2.30.0",
+    "body-parser": "~1.0.1",
+    "bootstrap": "^3.3.7",
+    "express": "~4.15.0",
+    "jquery": "^3.2.1",
+    "mongoose": "~4.8.6",
+    "passport": "~0.3.2",
+    "passport-google": "~0.3.0"
+  }
+}
