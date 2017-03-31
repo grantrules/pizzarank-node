@@ -14,7 +14,7 @@ mod.component('restaurantRatingForm', {
     controller: ['$scope', 'RatingForm', function RatingFormController($scope, RatingForm) {
         $scope.title = 'Enter title';
         $scope.body = "Write your review";
-        $scope.rating = 5;
+        $scope.rating = 0;
         $scope.submit = function() {
             RatingForm.save(this.$ctrl.resCtrl.restaurant._id, {
                 title: $scope.title,
