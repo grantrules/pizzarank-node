@@ -1,12 +1,16 @@
 var config = require('./config');
 var express = require('express');
 var bodyParser = require('body-parser');
+
+
 var passport = require('passport');
+var jwt = require('jsonwebtoken');
+var LocalStrategy = require('passport-local').Strategy;
 
 var Restaurant = require('./models/restaurant');
 var restaurantController = require('./controllers/restaurants');
 
-var User = require('./models/user.js');
+
 var userController = require('./controllers/users');
 
 var app = express();
@@ -14,10 +18,61 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-//app.use(passport.initialize());
 
 var mongoose = require('mongoose');
 mongoose.connect(config.mongodb);
+
+// LOCAL LOGIN
+
+app.use(passport.initialize());
+passport.use(new LocalStrategy({
+        usernameField: 'email',
+        passwordField: 'password'
+    },
+    function(email, password, done) {
+    var User = mongoose.model('User');
+
+        User.findOne({'email': email}, function(err, user) {
+            if (err) { return done(err); }
+            if (!user) {
+                return done(null, false, { message: 'Incorrect email.' });
+            }
+            if (!user.validatePassword(password)) {
+                return done(null, false, { message: 'Incorrect password.' });
+            }
+            return done(null, user);
+        })
+    }
+));
+
+// JWT
+
+var JwtStrategy = require('passport-jwt').Strategy,
+    ExtractJwt = require('passport-jwt').ExtractJwt;
+
+passport.use(new JwtStrategy({
+        jwtFromRequest: ExtractJwt.fromAuthHeader(),
+        secretOrKey: 'secret'
+    },
+    function(jwt_payload, done) {
+    console.log(jwt_payload);
+    done(null, jwt_payload);
+    
+    //data is in jwt_payload
+    /*
+    User.findOne({id: jwt_payload.sub}, function(err, user) {
+        if (err) {
+            return done(err, false);
+        }
+        if (user) {
+            done(null, user);
+        } else {
+            done(null, false);
+            // or you could create a new account 
+        }
+    });
+    */
+}));
 
 /*
 var GoogleStrategy = require('passport-google').Strategy;
@@ -68,7 +123,7 @@ router.route('/ratings/:restaurant_id')
 router.route('/users')
     .post(userController.postUsers)
 
-    .get(userController.getUsers);
+    .get(passport.authenticate('jwt', {session:false}), userController.getUsers);
 
 router.route('/user/:user_id')
     .get(userController.getUser)
@@ -76,6 +131,15 @@ router.route('/user/:user_id')
     .put(userController.putUser)
 
     .delete(userController.deleteUser);
+
+// LOGIN
+
+
+router.route('/login')
+    .post(passport.authenticate('local', {session: false}), function(req, res) {
+        res.json(jwt.sign(req.user,"secret"));
+    }
+);
 
 app.listen(config.port);
 

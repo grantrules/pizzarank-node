@@ -27,6 +27,10 @@ module.exports = function() {
 
     }
     
+    userSchema.methods.validatePassword = function(password) {
+        return this.hashed_password == userSchema.statics.hashPassword(password);
+    }
+    
     userSchema.statics.ROLES = {
         user: "user",
         admin: "admin",
