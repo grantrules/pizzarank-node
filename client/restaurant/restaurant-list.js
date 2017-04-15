@@ -1,6 +1,6 @@
 angular.module('restaurantList', [
     'ngRoute',
-    'restaurant'
+    'restaurant',
 ])
 
 .component('restaurantList', {

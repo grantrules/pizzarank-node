@@ -116,7 +116,7 @@ router.route('/restaurants/:restaurant_id')
     .delete(restaurantController.deleteRestaurant);
 
 router.route('/ratings/:restaurant_id')
-    .post(restaurantController.postRatings);
+    .post(passport.authenticate('jwt', {session:false}), restaurantController.postRatings);
 
 
 // USERS
@@ -133,8 +133,6 @@ router.route('/user/:user_id')
     .delete(userController.deleteUser);
 
 // LOGIN
-
-
 router.route('/login')
     .post(passport.authenticate('local', {session: false}), function(req, res) {
         res.json(jwt.sign(req.user,"secret"));

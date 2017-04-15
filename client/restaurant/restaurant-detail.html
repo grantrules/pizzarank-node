@@ -109,6 +109,12 @@ http://bootsnipp.com/snippets/featured/testimonials-based-on-bootstrap039s-6-pri
         
         
     <div class="row-fluid"> 
+        
+        
+            <p ng-show="!$ctrl.restaurant.ratings.length">No ratings yet.</p>
+
+        
+        <!-- NG-REPEAT -->
       <div class="col-sm-6" ng-repeat="rating in $ctrl.restaurant.ratings">
           <div class="panel panel-default">
           <div class="panel-heading">
@@ -118,32 +124,31 @@ http://bootsnipp.com/snippets/featured/testimonials-based-on-bootstrap039s-6-pri
           <div class="panel-body" itemprop="reviewBody">
             <p>{{rating.body}}</p>
 
-            <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-              <small>
-              <span itemprop="name">-- J. Reviewer</span>
-                </small>
-            </span><!--/author schema -->
-<small>
-              <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+               <small>
+                    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
 
-    {{rating.date_added|date:'fullDate'}}</small>
+                      <span itemprop="name">-- J. Reviewer</span>
+                    </span><!--/author schema -->
+                      <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+
+                    {{rating.date_added|date:'fullDate'}}
+              </small>
               
               <span class="pull-right">
                   
               <span class="reviewRating" itemscope itemtype="http://schema.org/Rating">
                   <small>
-                <meta itemprop="worstRating" content="1">
                   <span itemprop="ratingValue">{{rating.rating}}</span> / 
                 <span itemprop="bestRating"> stars </span>
                   </small>
               </span><!--/reviewRating-->
                   <small>
               
-              <span class="glyphicon glyphicon-star {{rating.rating > 0 ? '' : 'text-muted'}}" aria-hidden="true"></span>
               <span class="glyphicon glyphicon-star {{rating.rating > 1 ? '' : 'text-muted'}}" aria-hidden="true"></span>
-              <span class="glyphicon glyphicon-star {{rating.rating > 2 ? '' : 'text-muted'}}" aria-hidden="true"></span>
-              <span class="glyphicon glyphicon-star {{rating.rating > 3 ? '' : 'text-muted'}}" aria-hidden="true"></span>
-              <span class="glyphicon glyphicon-star {{rating.rating < 5 ? '' : 'text-muted'}}" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-star {{rating.rating < 2 ? 'text-muted' : ''}}" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-star {{rating.rating < 3 ? 'text-muted' : ''}}" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-star {{rating.rating < 4 ? 'text-muted' : ''}}" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-star {{rating.rating < 5 ? 'text-muted' : ''}}" aria-hidden="true"></span>
             </small>
               </span>
           </div><!--/panel-body-->
@@ -167,29 +172,5 @@ http://bootsnipp.com/snippets/featured/testimonials-based-on-bootstrap039s-6-pri
 	<restaurant-rating-form></restaurant-rating-form>
 		
 		
-		<form method="post" action="">
-			<div class="row">
-				<div class="col-md-6">
-						<div class="form-group">
-						<label for="username">Username</label>
-							<input id="username" maxlength="254" name="username" type="text" required class="form-control" placeholder="Enter username"/>
-						<!-- input type="text" class="form-control" id="InputUsername" aria-describedby="emailHelp" placeholder="Enter email" -->
-						</div>
-						<div class="form-group">
-						<label for="password">Password</label>
-						<input type="password" class="form-control" id="password" name="password" placeholder="Password">
-						</div>
-				</div>
-				<div class="col-md-6">
-					  <button type="submit" class="btn btn-primary">Log in</button> or   <a href="" class="btn btn-info">Register</a> to post a review
-					
-					<p>Forgot your password? <a href="">Recover your account</a></p>
-
-
-						
-				</div>
-
-			</div>
-		<input type="hidden" name="next" value="">	
-		</form>
+		<login-form></login-form>
 	</div>

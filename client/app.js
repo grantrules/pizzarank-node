@@ -3,6 +3,8 @@ angular.module('pizzarankApp', [
     'restaurantList',
     'restaurantDetail',
     'restaurant',
+    'user',
+    'ui.bootstrap',
 ])
 
 .config(['$locationProvider' ,'$routeProvider',
@@ -15,6 +17,9 @@ angular.module('pizzarankApp', [
         }).
         when('/restaurant/:restaurant_id', {
           template: '<restaurant-detail></restaurant-detail>'
+        }).
+        when('/profile/:user_id', {
+          template: '<profile></profile>'
         }).
         otherwise('/restaurants');
     }
