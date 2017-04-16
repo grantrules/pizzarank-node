@@ -26,7 +26,13 @@ mod.service('LoginForm', ['$http', function($http) {
     return {
         login: function(email,pass) {
             // separate into user model?
-            $http.post('/api/login', {'email': email, 'password': pass }).then(function(res){alert('toot')}, function(err){alert(err);});
+            $http.post('/api/login', {'email': email, 'password': pass }).then(
+                function(res){
+                    localStorage.setItem('id_token', res.data);
+                },
+                
+                function(err){alert(err);}
+            );
             
         }
     }

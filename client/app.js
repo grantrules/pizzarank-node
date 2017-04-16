@@ -5,10 +5,11 @@ angular.module('pizzarankApp', [
     'restaurant',
     'user',
     'ui.bootstrap',
+    'angular-jwt',
 ])
 
-.config(['$locationProvider' ,'$routeProvider',
-    function config($locationProvider, $routeProvider) {
+.config(['$locationProvider' ,'$routeProvider', '$httpProvider', 'jwtOptionsProvider',  
+    function config($locationProvider, $routeProvider, $httpProvider, jwtOptionsProvider) {
       $locationProvider.hashPrefix('!');
 
       $routeProvider.
@@ -22,5 +23,16 @@ angular.module('pizzarankApp', [
           template: '<profile></profile>'
         }).
         otherwise('/restaurants');
+        
+        
+        // jwt middleware
+        jwtOptionsProvider.config({
+            authPrefix: "JWT ",
+          tokenGetter: function() {
+            return localStorage.getItem('id_token');
+          }
+        });
+
+        $httpProvider.interceptors.push('jwtInterceptor');
     }
   ]);
