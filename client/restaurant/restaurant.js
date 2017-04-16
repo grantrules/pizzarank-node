@@ -21,3 +21,19 @@ mod.factory('Rating', ['$resource',
    }
 
 ]);
+
+mod.controller('SearchCtrl', ['$scope', '$http', function($scope, $http){
+    
+    $scope.getRestaurants = function(val) {
+        return $http.get('/api/restaurantsearch', {
+            params: {
+            name: val
+        }
+    }).then(function(response){
+        return response.data.map(function(item){
+            return item.name;
+        });
+    });
+  };
+
+}]);

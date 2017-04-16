@@ -11,6 +11,14 @@
         <script src="/node_modules/angular-animate/angular-animate.js"></script>
         <script src="/node_modules/angular-resource/angular-resource.js"></script>
         <script src="/node_modules/angular-route/angular-route.js"></script>
+        <script src="/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+        <script src="/node_modules/angular-jwt/dist/angular-jwt.js"></script>
+
+        
+        <script src="user/user.js"></script>
+        <script src="user/login-form.js"></script>
+
+
         <script src="restaurant/restaurant-detail.js"></script>
         <script src="restaurant/restaurant.js"></script>
         <script src="restaurant/restaurant-list.js"></script>
@@ -41,7 +49,7 @@
 		<a href="/"><img class="img-responsive" src="/static/images/pizzarank.jpg"></a>
 		
 		<!-- http://bootsnipp.com/snippets/featured/search-panel-with-filters -->
-		<div class="row">    
+		<div class="row" ng-controller="SearchCtrl">    
         <div class="col-xs-8 col-xs-offset-2">
 		    <div class="input-group">
                 <div class="input-group-btn search-panel">
@@ -58,8 +66,13 @@
 						<li><a href="#">All Boroughs</a></li>
                     </ul>
                 </div>
-                <input type="hidden" name="search_param" value="all" id="search_param">         
-                <input type="text" class="form-control" name="x" placeholder="Search term...">
+                <input type="hidden" name="search_param" value="all" id="search_param">
+                <input type="text" ng-model="asyncSelected" placeholder="Locations loaded via $http" uib-typeahead="name for name in getRestaurants($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
+    <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+    <div ng-show="noResults">
+      <i class="glyphicon glyphicon-remove"></i> No Results Found
+    </div>
+                <!-- input type="text" class="form-control" name="x" placeholder="Search term..." -->
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
                 </span>

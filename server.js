@@ -55,8 +55,7 @@ passport.use(new JwtStrategy({
         secretOrKey: 'secret'
     },
     function(jwt_payload, done) {
-    console.log(jwt_payload);
-    done(null, jwt_payload);
+        done(null, jwt_payload);
     
     //data is in jwt_payload
     /*
@@ -105,6 +104,9 @@ router.route('/restaurants')
 
     .get(restaurantController.getRestaurants);
 
+router.route('/restaurantsearch')
+    .get(restaurantController.getRestaurantSearch);
+
 router.route('/restaurants/nearby')
     .get(restaurantController.getRestaurantsNearby);
 
@@ -135,7 +137,7 @@ router.route('/user/:user_id')
 // LOGIN
 router.route('/login')
     .post(passport.authenticate('local', {session: false}), function(req, res) {
-        res.json(jwt.sign(req.user,"secret"));
+        res.json({'user': req.user, 'token': jwt.sign(req.user,"secret")});
     }
 );
 

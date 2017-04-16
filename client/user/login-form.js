@@ -22,13 +22,15 @@ mod.component('loginForm', {
 });
 
 
-mod.service('LoginForm', ['$http', function($http) {
+mod.service('LoginForm', ['$http', 'authManager', function($http, authManager) {
     return {
         login: function(email,pass) {
             // separate into user model?
             $http.post('/api/login', {'email': email, 'password': pass }).then(
                 function(res){
-                    localStorage.setItem('id_token', res.data);
+                    localStorage.setItem('id_token', res.data.token);
+                    localStorage.setItem('user', res.data.user);
+                    authManager.authenticate();
                 },
                 
                 function(err){alert(err);}

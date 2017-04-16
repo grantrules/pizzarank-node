@@ -1,10 +1,4 @@
-
-	<ul>
-		<!-- li ng-repeat="restaurant in $ctrl.restaurants">
-            <h2><a href="#!/restaurant/{{restaurant._id}}">{{restaurant.name}}</a></h2>
-			
-        </li -->
-	</ul>
+<a href="#!/restaurants">Back</a>
 
 <div class="card">
 			<div class="container-fliud">
@@ -159,18 +153,9 @@ http://bootsnipp.com/snippets/featured/testimonials-based-on-bootstrap039s-6-pri
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
 		
-	<restaurant-rating-form></restaurant-rating-form>
+	<restaurant-rating-form ng-if="$root.isAuthenticated"></restaurant-rating-form>
 		
 		
-		<login-form></login-form>
+		<login-form ng-if="!$root.isAuthenticated"></login-form>
 	</div>

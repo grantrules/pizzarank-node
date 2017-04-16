@@ -36,6 +36,18 @@ exports.getRestaurants = function(req,res) {
     });
 };
 
+// GET /api/restaurantsearch
+// params: name
+exports.getRestaurantSearch = function(req,res) {
+    var name = req.query.name;
+    Restaurant.find({name: new RegExp(name, "i")},
+        function(err,restaurants) {
+            if (err)
+                return res.json(err);
+            res.json(restaurants);
+        });
+}
+
 // GET /api/restaurants/nearby
 exports.getRestaurantsNearby = function(req,res) {
     var lat = req.query.lat;

@@ -36,3 +36,11 @@ angular.module('pizzarankApp', [
         $httpProvider.interceptors.push('jwtInterceptor');
     }
   ]);
+
+angular
+  .module('pizzarankApp')
+  .run(function(authManager) {
+
+    authManager.checkAuthOnRefresh();
+
+  });
