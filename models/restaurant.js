@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var slug = require('slug')
 //var Rating = require('./rating');
 var User = require('./user');
 var ObjectId = mongoose.Schema.ObjectId;
@@ -14,7 +15,7 @@ var imageSchema = new mongoose.Schema({
 
 var ratingSchema = new mongoose.Schema({
     title: String,
-    rating: Number,
+    rating: { type: Number, min: 1, max: 5 },
     body: String,
     updates: [new mongoose.Schema({
         body: String,
@@ -34,6 +35,8 @@ var restaurantSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    slug: String,
+
     owner: { type: ObjectId, ref: 'User' },
     
     // group together address, city, state and make sure they're unique.. street address alone isn't unique
@@ -63,6 +66,14 @@ var restaurantSchema = new mongoose.Schema({
     images: [imageSchema],
     
     
+});
+
+restaurantSchema.pre('save', function(next){
+    if (!this.slug) {
+        // TODO need to search for existing slugs xxx, xxx-1, xxx-2
+        this.slug = slug(this.name, {lower:true});
+    }
+    next();
 });
 
 module.exports = mongoose.model('Restaurant', restaurantSchema);

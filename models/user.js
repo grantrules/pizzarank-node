@@ -17,6 +17,7 @@ module.exports = function() {
         role: String,
         date_added: Date,    
     });
+    
 
     userSchema.statics.hashPassword = function(password,callback) {
         hash = crypto.createHash('sha256').update(password + config.secret)
@@ -26,6 +27,11 @@ module.exports = function() {
         return hash;
 
     }
+    
+    userSchema.methods.getNameStub = function() {
+        return this.name + " " + this.name.charAt(0);
+    }
+
     
     userSchema.methods.validatePassword = function(password) {
         return this.hashed_password == userSchema.statics.hashPassword(password);

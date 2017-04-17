@@ -3,7 +3,7 @@
 
 	<ul>
 		<li ng-repeat="restaurant in $ctrl.restaurants"><!-- | filter:$ctrl.query | orderBy:$ctrl.orderProp" -->
-            <h2><a href="#!/restaurant/{{restaurant._id}}">{{restaurant.name}}</a></h2>
+            <h2><a href="#!/restaurant/{{restaurant.slug}}">{{restaurant.name}}</a></h2>
 			
         </li>
 	</ul>

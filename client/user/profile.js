@@ -14,3 +14,14 @@ mod.component('profile', {
       }
     ]
 });
+
+mod.component('register', {
+    transclude: true,
+    templateUrl: 'register.html',
+    controller: ['$scope', 'User',
+        function RegisterController($scope, User) {
+            var self = this;
+            
+        }
+    ]
+})

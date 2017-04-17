@@ -111,7 +111,7 @@ router.route('/restaurants/nearby')
     .get(restaurantController.getRestaurantsNearby);
 
 router.route('/restaurants/:restaurant_id')
-    .get(restaurantController.getRestaurant)
+    .get(restaurantController.getRestaurant) // RESTAURANT_SLUG
 
     .put(restaurantController.putRestaurant)
 
@@ -119,6 +119,8 @@ router.route('/restaurants/:restaurant_id')
 
 router.route('/ratings/:restaurant_id')
     .post(passport.authenticate('jwt', {session:false}), restaurantController.postRatings);
+
+// RESTAURANT IMAGES
 
 
 // USERS

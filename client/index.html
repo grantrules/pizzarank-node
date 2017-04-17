@@ -12,6 +12,7 @@
         <script src="/node_modules/angular-resource/angular-resource.js"></script>
         <script src="/node_modules/angular-route/angular-route.js"></script>
         <script src="/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+        <script src="/node_modules/angular-ui-validate/dist/validate.js"></script>
         <script src="/node_modules/angular-jwt/dist/angular-jwt.js"></script>
 
         
@@ -47,6 +48,11 @@
 	
 	<div class="container">
 		<a href="/"><img class="img-responsive" src="/static/images/pizzarank.jpg"></a>
+        
+        <div class="row">
+            <div ng-if="$root.isAuthenticated">Logged in</div>
+            <div ng-if="!$root.isAuthenticated"><a href="#!/login">Login</a> or <a href="#!/register">Register</a></div>
+        </div>
 		
 		<!-- http://bootsnipp.com/snippets/featured/search-panel-with-filters -->
 		<div class="row" ng-controller="SearchCtrl">    
@@ -67,7 +73,29 @@
                     </ul>
                 </div>
                 <input type="hidden" name="search_param" value="all" id="search_param">
-                <input type="text" ng-model="asyncSelected" placeholder="Locations loaded via $http" uib-typeahead="name for name in getRestaurants($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
+                
+                
+                
+                <script type="text/ng-template" id="customPopupTemplate.html">
+  <div class="custom-popup-wrapper"
+     ng-style="{top: position().top+'px', left: position().left+'px'}"
+     style="display: block;"
+     ng-show="isOpen() && !moveInProgress"
+     aria-hidden="{{!isOpen()}}">
+    <p class="message">select location from drop down.</p>
+
+    <ul class="dropdown-menu" role="listbox">
+      <li class="uib-typeahead-match" ng-repeat="match in matches track by $index" ng-class="{active: isActive($index) }"
+        ng-mouseenter="selectActive($index)" ng-click="selectMatch($index)" role="option" id="{{::match.id}}">
+        <div uib-typeahead-match index="$index" match="match" query="query" template-url="templateUrl"></div>
+      </li>
+    </ul>
+  </div>
+</script>
+                
+                
+                
+                <input type="text" ng-model="asyncSelected" placeholder="Search..." uib-typeahead="name.name for name in getRestaurants($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control" typeahead-on-select="onSelect($item, $model, $label)">
     <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
     <div ng-show="noResults">
       <i class="glyphicon glyphicon-remove"></i> No Results Found

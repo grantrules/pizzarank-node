@@ -6,6 +6,7 @@ angular.module('pizzarankApp', [
     'user',
     'ui.bootstrap',
     'angular-jwt',
+    'ui.validate',
 ])
 
 .config(['$locationProvider' ,'$routeProvider', '$httpProvider', 'jwtOptionsProvider',  
@@ -13,16 +14,22 @@ angular.module('pizzarankApp', [
       $locationProvider.hashPrefix('!');
 
       $routeProvider.
+        when('/home', {
+          templateUrl: 'home.html'
+        }).
         when('/restaurants', {
           template: '<restaurant-list></restaurant-list>'
         }).
-        when('/restaurant/:restaurant_id', {
+        when('/restaurant/:restaurant_slug', {
           template: '<restaurant-detail></restaurant-detail>'
         }).
         when('/profile/:user_id', {
           template: '<profile></profile>'
         }).
-        otherwise('/restaurants');
+        when('/register', {
+          templateUrl: 'register.html'
+        }).
+        otherwise('/home');
         
         
         // jwt middleware

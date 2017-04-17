@@ -66,9 +66,9 @@ exports.getRestaurantsNearby = function(req,res) {
     );
 }
 
-// GET /api/restaurant/:restaurant_id
+// GET /api/restaurant/:restaurant_id <-- SLUG
 exports.getRestaurant = function(req,res) {
-    Restaurant.findById(req.params.restaurant_id, function(err,restaurant) {
+    Restaurant.findOne({slug: req.params.restaurant_id}, function(err,restaurant) {
         if (err)
             return res.json(err);
         res.json(restaurant);
@@ -125,6 +125,7 @@ exports.postRatings = function(req,res) {
             title: req.body.title,
             rating: req.body.rating,
             body: req.body.body,
+            user: req.user._id
         };
         
         restaurant.ratings.push(rating);

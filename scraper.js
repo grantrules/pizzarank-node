@@ -4,13 +4,13 @@ var Restaurant = require('./models/restaurant');
 var config = require('./config');
 var mongoose = require('mongoose');
 mongoose.connect(config.mongodb);
-
-var pizzaurl = "https://www.yelp.com/search?find_desc=Pizza&find_loc=Queens,+NY&start="
+var boro = 'Manhattan';
+var pizzaurl = "https://www.yelp.com/search?find_desc=Pizza&find_loc=Manhattan%2C+New+York%2C+NY&start="
 
 var urls = [];
 var pizzas = [];
 var num = 0;
-var max = 10;
+var max = 20;
 
 var urlnum = 0;
 
@@ -25,7 +25,9 @@ var doop = function(err,page) {
     }
 
     if (num > max) {
+        urls = urls.filter(onlyUnique);
         console.log(urls);
+
         blap();
         return;
     }
@@ -46,6 +48,10 @@ var doop = function(err,page) {
 
 }
 
+var onlyUnique = function(value, index, self) { 
+    return self.indexOf(value) === index;
+}
+
 var blap = function(err,page) {
     
     if (urlnum >= urls.length) {
@@ -63,7 +69,8 @@ var blap = function(err,page) {
             streetAddress: page.streetaddress,
             city: page.city,
             state: page.state,
-            zipcode: page.postalcode
+            zipcode: page.postalcode,
+            borough: boro
         };
         r.phoneNumber = page.phone;
         r.save(function(err){
