@@ -4,7 +4,8 @@ var config = require('../config');
 
 module.exports = function() {
     var userSchema = new mongoose.Schema({
-        name: String,
+        first_name: String,
+        last_name: String,
         email: {
             type: String,
             required: true,
@@ -29,7 +30,7 @@ module.exports = function() {
     }
     
     userSchema.methods.getNameStub = function() {
-        return this.name + " " + this.name.charAt(0);
+        return `${this.first_name} ${this.last_name.charAt(0)}.`;
     }
 
     

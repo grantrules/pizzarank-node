@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
 var slug = require('slug')
-//var Rating = require('./rating');
 var User = require('./user');
+
 var ObjectId = mongoose.Schema.ObjectId;
+
 var imageSchema = new mongoose.Schema({
     title: String,
     comment: String,
@@ -11,7 +12,6 @@ var imageSchema = new mongoose.Schema({
     user: { type: ObjectId, ref: 'User' },
 });
 
-//module.exports = mongoose.model('Image', imageSchema);
 
 var ratingSchema = new mongoose.Schema({
     title: String,
@@ -88,5 +88,3 @@ var ownerClaimScheme = new mongoose.Schema({
         default: Date.now
     },
 });
-
-//module.exports = mongoose.model('OwnerClaim', ownerClaimScheme);

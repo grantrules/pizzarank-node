@@ -9,6 +9,7 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var Restaurant = require('./models/restaurant');
 var restaurantController = require('./controllers/restaurants');
+var restaurantImageController = require('./controllers/restaurantimages');
 
 
 var userController = require('./controllers/users');
@@ -52,26 +53,12 @@ var JwtStrategy = require('passport-jwt').Strategy,
 
 passport.use(new JwtStrategy({
         jwtFromRequest: ExtractJwt.fromAuthHeader(),
-        secretOrKey: 'secret'
+        secretOrKey: config.JWTsecret
     },
     function(jwt_payload, done) {
         done(null, jwt_payload);
-    
-    //data is in jwt_payload
-    /*
-    User.findOne({id: jwt_payload.sub}, function(err, user) {
-        if (err) {
-            return done(err, false);
-        }
-        if (user) {
-            done(null, user);
-        } else {
-            done(null, false);
-            // or you could create a new account 
-        }
-    });
-    */
-}));
+    }
+));
 
 /*
 var GoogleStrategy = require('passport-google').Strategy;
@@ -121,6 +108,11 @@ router.route('/ratings/:restaurant_id')
     .post(passport.authenticate('jwt', {session:false}), restaurantController.postRatings);
 
 // RESTAURANT IMAGES
+router.route('/restaurantimagesign')
+    .get(passport.authenticate('jwt', {session:false}), restaurantImageController.getRestaurantImageSign);
+
+router.route('/restaurantimages')
+    .put(passport.authenticate('jwt', {session:false}), restaurantImageController.putRestaurantImages);
 
 
 // USERS
@@ -139,7 +131,7 @@ router.route('/user/:user_id')
 // LOGIN
 router.route('/login')
     .post(passport.authenticate('local', {session: false}), function(req, res) {
-        res.json({'user': req.user, 'token': jwt.sign(req.user,"secret")});
+        res.json({'user': req.user, 'token': jwt.sign(req.user,config.JWTsecret)});
     }
 );
 

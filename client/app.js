@@ -23,11 +23,14 @@ angular.module('pizzarankApp', [
         when('/restaurant/:restaurant_slug', {
           template: '<restaurant-detail></restaurant-detail>'
         }).
+        when('/b/:borough', {
+          template: '<restaurant-list borough="$borough"></restaurant-list>'
+        }).
         when('/profile/:user_id', {
           template: '<profile></profile>'
         }).
         when('/register', {
-          templateUrl: 'register.html'
+          template: '<register-form></register-form>'
         }).
         otherwise('/home');
         

@@ -1,23 +1,26 @@
 mongoose = require('mongoose');
 require('../models/user')();
+var jwt = require('jsonwebtoken');
+var config = require('../config');
 
 var User = mongoose.model('User');
 
 // POST /api/users
 exports.postUsers = function(req,res) {
-    var user = new User();
-    user.name = req.body.name;
-    user.email = req.body.email;
-    user.poop = "poop";
-    hash = User.hashPassword(req.body.password);
-    console.log(hash);
-    user.hashed_password = hash;
+    var user = {
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        hashed_password: User.hashPassword(req.body.password)
+    }
+    
+    console.log(`registering user ${user.email}`);
 
-    user.save(function(err) {
+    User.create(user, function(user, err) {
         if (err)
             res.send(err);
         else
-            res.json({ message: 'User created!' });
+            res.json({'user': user, 'token': jwt.sign(user,config.JWTsecret)}); 
     });
         
 };
@@ -41,6 +44,12 @@ exports.getUser = function(req,res) {
     });
 
 };
+
+// GET /api/userreviews/:user_id
+exports.getUserRatings = function(req,res) {
+    // should ratings be duplicated in the user model?
+    //Restaurant.find({'ratings.user': req.params.user_id});
+}
 
 // PUT /api/user/:user_id
 exports.putUser = function(req,res) {
